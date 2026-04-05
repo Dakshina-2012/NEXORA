@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexora - Premium Gaming Discovery</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <!-- FontAwesome for icons -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo" onclick="app.goHome()">
+                <img src="logo.png" alt="Nexora" class="nav-image-logo">
+            </div>
+            <div class="nav-links">
+                <a href="#" onclick="app.filterCategory('All')" class="active">All</a>
+                <a href="#" onclick="app.filterCategory('Action')">Action</a>
+                <a href="#" onclick="app.filterCategory('Adventure')">Adventure</a>
+                <a href="#" onclick="app.filterCategory('Puzzle')">Puzzle</a>
+                <a href="#" onclick="app.filterCategory('Sports')">Sports</a>
+                <a href="#" onclick="app.filterCategory('Racing')">Racing</a>
+                <a href="#" onclick="app.filterCategory('Strategy')">Strategy</a>
+                <a href="#" onclick="app.filterCategory('Arcade')">Arcade</a>
+            </div>
+            <div class="nav-actions">
+                <div class="search-bar">
+                    <i class="fa-solid fa-search"></i>
+                    <input type="text" id="search-input" placeholder="Search games...">
+                </div>
+                <button class="btn-primary" onclick="app.logout()"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Application Container -->
+    <main id="app-content">
+        <!-- HOME VIEW -->
+        <div id="home-view">
+            <header class="hero">
+                <div class="hero-content">
+                    <h1>Real-Time Game Discovery.</h1>
+                    <p>Instant play. No downloads. Curation at its finest.</p>
+                    <button class="btn-accent" onclick="app.playRandom()"><i class="fa-solid fa-play"></i> Play Random</button>
+                </div>
+                <div class="hero-overlay"></div>
+            </header>
+
+            <div class="container">
+                <div class="section-header">
+                    <h2 id="current-category-title">Trending Games</h2>
+                    <div class="view-toggles">
+                        <button class="icon-btn active"><i class="fa-solid fa-grid-2"></i></button>
+                        <button class="icon-btn"><i class="fa-solid fa-list"></i></button>
+                    </div>
+                </div>
+                <div class="games-grid" id="games-container">
+                    <!-- Games will be injected here by app.js -->
+                </div>
+            </div>
+        </div>
+
+        <!-- GAME DETAIL VIEW -->
+        <div id="game-detail-view" style="display: none;">
+            <div class="immersive-hero">
+                <!-- Immersive background video covering the entire top area -->
+                <video id="game-video" autoplay loop muted playsinline class="immersive-bg-video"></video>
+                <div class="immersive-hero-overlay"></div>
+                
+                <div class="container immersive-hero-content">
+                    <button class="back-btn" onclick="app.goHome()"><i class="fa-solid fa-arrow-left"></i> Back to Games</button>
+                    <div class="immersive-title-group">
+                        <h1 id="detail-title">Game Title</h1>
+                        <div class="tags">
+                            <span class="tag" id="detail-category">Category</span>
+                            <span class="tag rating"><i class="fa-solid fa-star"></i> <span id="detail-rating">4.5</span> (<span id="detail-reviews-count">0</span>)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="container game-info-container" style="margin-top: -80px; position: relative; z-index: 10;">
+                <div class="game-main-info">
+                    
+                    <div class="card info-card">
+                        <h3>About this game</h3>
+                        <p id="detail-description">Description goes here.</p>
+                        
+                        <h4 class="mt-4"><i class="fa-solid fa-keyboard"></i> Instructions</h4>
+                        <p id="detail-instructions">Instructions go here.</p>
+                        
+                        <h4 class="mt-4"><i class="fa-solid fa-desktop"></i> Required Specs</h4>
+                        <p id="detail-requirements">Requirements go here.</p>
+                    </div>
+
+                    <div class="card info-card mt-4">
+                        <h3>Public Reviews</h3>
+                        <div id="detail-reviews-list">
+                            <!-- Reviews injected by JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="game-sidebar">
+                    <div class="card info-card">
+                        <h3>Similar Games</h3>
+                        <div id="detail-similar-games">
+                            <!-- Similar games injected by JS -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Splash Screen -->
+    <div id="splash-screen" class="splash-screen active">
+        <div class="splash-content">
+            <img src="logo.png" alt="Nexora Magic Logo" class="magical-image-logo">
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="login-modal" class="modal">
+        <div class="modal-content">
+            <img src="logo.png" alt="Nexora Logo" class="login-image-logo">
+            <h2>Welcome to Nexora</h2>
+            <p>Please sign in to access the gaming platform.</p>
+            <p id="login-error" style="color: #ef4444; margin-top: 10px; display: none; font-size: 0.9em; font-weight: 500;"></p>
+            <div class="form-group mt-4">
+                <label>Email</label>
+                <input type="email" id="login-email" placeholder="gamer@nexora.io" class="form-control">
+            </div>
+            <div class="form-group mt-3">
+                <label>Password</label>
+                <input type="password" id="login-password" placeholder="••••••••" class="form-control">
+            </div>
+            <button class="btn-primary w-100 mt-4" onclick="app.login()">Sign In</button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="database.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
